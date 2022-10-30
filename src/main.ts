@@ -6,6 +6,7 @@ import bootstrapRouter from './router';
 
 import './style/global.less';
 
+
 const bootsrap = () => {
   const app = createApp(App);
 

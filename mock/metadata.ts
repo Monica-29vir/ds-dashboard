@@ -15,11 +15,11 @@ const requests: MockMethod[] = [
           .map(() => {
             return {
               uuid: '@uuid',
-              username: Random.name(),
               ip: Random.ip(),
               port: Random.integer(1000, 50000),
+              username: Random.name(),
               export_port: Random.integer(1000, 50000),
-              export_ip: Random.ip(),
+              export_ip: Random.integer(1000, 50000),
             };
           }),
       });

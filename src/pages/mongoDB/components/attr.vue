@@ -17,15 +17,12 @@ import { useAxios } from '@vueuse/integrations/useAxios';
 import { instance, ResponseWrap } from '@/api';
 import { AttrinformationParams, AttrListData } from '@/api/types';
 
-const True = ref(true);
-const False = ref(false);
-
 const pagination = reactive<{ current: number; pageSize: number; total?: number }>({
   current: 1,
   pageSize: 15,
 });
 
-const { data, isLoading, execute } = useAxios<ResponseWrap<AttrListData>>(
+const { data} = useAxios<ResponseWrap<AttrListData>>(
   ATTR_URL,
   { method: 'GET', params: { pg: pagination.current, size: pagination.pageSize } },
   instance,

@@ -27,7 +27,7 @@ import { useAxios } from '@vueuse/integrations/useAxios';
 import { instance, ResponseWrap } from '@/api';
 import { DBinformationParams, DBListData } from '@/api/types';
 import { TreeinformationParams, TreeData } from '@/api/types';
-import { reactive, ref, watch } from 'vue';
+import { reactive, ref, watch, computed } from 'vue';
 import { DB_URL } from '@/api/url';
 import PageContainer from '@/components/PageContainer.vue';
 import comlist from './components/metadata.vue';
@@ -39,36 +39,31 @@ const pagination = reactive<{ current: number; pageSize: number; total?: number 
   pageSize: 15,
 });
 
-const { data: dbdata } = useAxios<ResponseWrap<DBListData>>(
+const { data } = useAxios<ResponseWrap<TreeData>>(
   DB_URL,
   { method: 'GET', params: { pg: pagination.current, size: pagination.pageSize } },
   instance,
 );
 
-const { data: treedata } = useAxios<ResponseWrap<DBListData>>(
+ /*const { data: treedata } = useAxios<ResponseWrap<TreeData>>(
   DB_URL,
   { method: 'GET', params: { pg: pagination.current, size: pagination.pageSize } },
   instance,
-);
-
-//树的搜索框
-const searchKey = ref();
+);*/
 
 //搜索按钮
 const handleSearch = () => {};
 
-
-const tableData = computed(() => {
-  return dbdata.value?.data?.data;
-});
-
 const treeData = computed(() => {
-  return treedata.value?.data?.data;
+  return data.value?.data?.data;
 });
 
 const handlePageChange = (page: number) => {
   pagination.current = page;
 };
+
+//树的搜索框
+const searchKey = ref('');
 
 
 </script>
@@ -92,15 +87,8 @@ const handlePageChange = (page: number) => {
             <template #first>
               <TypographyParagraph>
                 <InputSearch style="margin-bottom: 8px; max-width: 240px" v-model="searchKey" />
-                <Tree
-                  ref="treeRef"
-                  blockNode
-                  checkable
-                  :data="treeData"
-                  :virtualListProps="{
-                    height: 800,
-                  }"
-                />
+                <Tree blockNode :virtual-list-props="{ height: 800 }" :data="treeData">
+                </Tree>
               </TypographyParagraph>
             </template>
             <template #second>

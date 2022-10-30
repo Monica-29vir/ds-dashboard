@@ -33,9 +33,11 @@ export interface ConcurrentChartValue {
 
 export interface DBinformationParams{
   uuid?: string;
-  dbName?:string;
-  collectionName?:string;
-  docName?:string;
+  ip?:string;
+  port?:string;
+  userName?:string;
+  export_port?:string;
+  export_ip?:string;
 }
 
 export interface DBListData{
@@ -44,10 +46,14 @@ export interface DBListData{
 }
 
 export interface TreeinformationParams{
-  uuid: string;
+  uuid?: string;
+  dbName?:string;
+  collectionName?:string;
+  docName?:string;
 }
 
 export interface TreeData{
+  count:number;
   data:TreeinformationParams[];
 }
 
@@ -93,4 +99,15 @@ export interface AttrinformationParams{
 export interface AttrListData{
   count:number;
   data:AttrinformationParams[];
+}
+
+export interface ReadListDataItem {
+  uuid: string;
+  dbName: string;
+  collectionName: string;
+}
+
+export interface ReadListData {
+  count: number;
+  data: ReadListDataItem[];
 }

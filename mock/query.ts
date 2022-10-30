@@ -8,10 +8,16 @@ const requests: MockMethod[] = [
     method: 'post',
     response: () => {
       return successResp({
-        count: Random.integer(100, 500),
-        data: {
-          'array|count': [Random.string],
-        },
+        count: 500,
+        data: Array(1)
+          .fill(1)
+          .map(() => {
+            return {
+              uuid: Random.uuid(),
+              dbName: Random.name(),
+              collectionName:Random.name(),
+            };
+          }),
       });
     },
   },
@@ -20,10 +26,16 @@ const requests: MockMethod[] = [
     method: 'post',
     response: () => {
       return successResp({
-        count: Random.integer(100, 500),
-        data: {
-          'array|count': [Random.string],
-        },
+        count: 500,
+        data: Array(500)
+          .fill(1)
+          .map(() => {
+            return {
+              uuid: Random.id(),
+              dbName: Random.name(),
+              collectionName: Random.name(),
+            };
+          }),
       });
     },
   },
@@ -48,18 +60,6 @@ const requests: MockMethod[] = [
         count: Random.integer(100, 500),
         data: {
           'array|count': [Random.string],
-        },
-      });
-    },
-  },
-  {
-    url: '/api/v1/bson',
-    method: 'post',
-    response: ({ query }: { query: any }) => {
-      const size = +query.size;
-      return successResp({
-        data: {
-          document: Random.string
         },
       });
     },

@@ -30,7 +30,7 @@ const form = reactive({
         <Col :span="11">
           <div class="wrap">
             <Form :model="form">
-              <FormItem field="" label="uuid">
+              <FormItem field="uuid" label="uuid">
                 <Select :style="{ width: '440px' }" placeholder="Please select ...">
                   <Option>aaaaaaa</Option>
                   <Option>bbbbbbb</Option>
@@ -58,7 +58,7 @@ const form = reactive({
         <Divider style="height: 700px" direction="vertical" />
         <Col :span="11">
           <div class="pack">
-            <Form>
+            <Form :model="form">
               <FormItem field="outcome" label="结果">
                 <JsonEdit :style="{ width: '440px', height: '505px' }" />
               </FormItem>

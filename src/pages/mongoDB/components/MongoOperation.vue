@@ -270,19 +270,23 @@ const handleDeleteOp = (index: number) => {
 
                 <Col :span="6">
                   <FormItem no-style :rules="[{ required: true }]">
-                    <Button @click="handleAddCondition" :style="{ marginLeft: '10px' }">
-                      Add Post
-                    </Button>
-
                     <Popconfirm
                       content="请确认是否删除"
                       @ok="() => handleDeleteCondition(index)"
                       type="warning"
                     >
-                      <Button :style="{ marginLeft: '10px' }"
-                        >Delete</Button
-                      >
+                      <Button :style="{ marginLeft: '10px' }">Delete</Button>
                     </Popconfirm>
+                  </FormItem>
+                </Col>
+              </Row>
+            </FormItem>
+
+            <FormItem>
+              <Row :gutter="10">
+                <Col :span="12">
+                  <FormItem no-style>
+                    <Button @click="handleAddCondition">Add</Button>
                   </FormItem>
                 </Col>
               </Row>
@@ -322,17 +326,23 @@ const handleDeleteOp = (index: number) => {
 
                 <Col :span="6">
                   <FormItem no-style>
-                    <Button @click="handleAddOp" :style="{ marginLeft: '10px' }"> Add Post </Button>
-
                     <Popconfirm
                       content="请确认是否删除"
                       @ok="() => handleDeleteOp(index)"
                       type="warning"
                     >
-                      <Button :style="{ marginLeft: '10px' }"
-                        >Delete</Button
-                      >
+                      <Button :style="{ marginLeft: '10px' }">Delete</Button>
                     </Popconfirm>
+                  </FormItem>
+                </Col>
+              </Row>
+            </FormItem>
+
+            <FormItem>
+              <Row :gutter="10">
+                <Col :span="12">
+                  <FormItem no-style>
+                    <Button @click="handleAddOp">Add</Button>
                   </FormItem>
                 </Col>
               </Row>
@@ -345,7 +355,6 @@ const handleDeleteOp = (index: number) => {
               :key="index"
               :content-flex="false"
               :merge-props="false"
-              
             >
               <Row :gutter="10">
                 <Col :span="12">
@@ -355,17 +364,12 @@ const handleDeleteOp = (index: number) => {
                 </Col>
                 <Col :span="4">
                   <FormItem no-style>
-                    <Button @click="handleAddDocuments" :style="{ marginLeft: '10px' }">
-                      Add Post
-                    </Button>
                     <Popconfirm
                       content="请确认是否删除"
                       @ok="() => handleDeleteDocuments(index)"
                       type="warning"
                     >
-                      <Button :style="{ marginLeft: '10px' }"
-                        >Delete</Button
-                      >
+                      <Button :style="{ marginLeft: '10px' }">Delete</Button>
                     </Popconfirm>
                   </FormItem>
                 </Col>
@@ -373,7 +377,23 @@ const handleDeleteOp = (index: number) => {
             </FormItem>
 
             <FormItem>
-              <Button type="primary" html-type="submit">确认</Button>
+              <Row :gutter="10">
+                <Col :span="12">
+                  <FormItem no-style>
+                    <Button @click="handleAddDocuments">Add</Button>
+                  </FormItem>
+                </Col>
+              </Row>
+            </FormItem>
+
+            <FormItem>
+              <Row :gutter="10">
+                <Col :span="12">
+                  <FormItem no-style>
+                    <Button type="primary" html-type="submit">确认</Button>
+                  </FormItem>
+                </Col>
+              </Row>
             </FormItem>
           </Row>
         </Form>

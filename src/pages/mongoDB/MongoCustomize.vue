@@ -42,7 +42,6 @@ const changeStep = (idx: number) => {
       <Card
         class="general-card"
         :bordered="false"
-        :style="{ height: '280px' }"
         :headStyle="{ color: '#0785fd' }"
         :bodyStyle="{ padding: '0' }"
       >

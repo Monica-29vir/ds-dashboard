@@ -48,7 +48,7 @@ const changeStep = (idx: number) => {
         :headStyle="{ color: '#0785fd' }"
         :bodyStyle="{ padding: '0' }"
       >
-        <template #title>MongoDB基本操作结果</template>
+        <template #title>MongoDB基本操作结果:</template>
         <MongoJson :data="json" />
       </Card>
     </div>

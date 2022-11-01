@@ -105,7 +105,7 @@ const formRef = ref<FormInstance>();
 <template>
   <Card :bordered="false">
     <template #title>MongoDB自定义操作</template>
-    <Row >
+    <Row>
       <Col :span="11">
         <div class="wrap">
           <Form :model="form" ref="formRef" @submit="handleSubmit()">
@@ -114,7 +114,8 @@ const formRef = ref<FormInstance>();
               label="选择实例"
               :virtual-list-props="{ height: 300 }"
               :rules="[{ required: true, message: '请选择实例' }]"
-              help="This is custom operation"  feedback
+              help="请选择实例"
+              feedback
             >
               <Select
                 :style="{ width: '455px' }"
@@ -136,7 +137,8 @@ const formRef = ref<FormInstance>();
               label="选择数据库"
               :virtual-list-props="{ height: 300 }"
               :rules="[{ required: true, message: '请选择数据库' }]"
-              help="This is custom operation" feedback
+              help="请选择数据库"
+              feedback
             >
               <Select
                 :style="{ width: '455px' }"
@@ -156,7 +158,8 @@ const formRef = ref<FormInstance>();
             <FormItem
               field="bsonStr"
               label="输入json"
-              help="This is custom operation"  feedback
+              help="请输入正确格式的json"
+              feedback
             >
               <Col :span="19">
                 <Textarea placeholder="Please enter something" allow-clear></Textarea>

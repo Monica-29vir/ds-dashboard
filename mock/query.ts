@@ -31,7 +31,7 @@ const requests: MockMethod[] = [
           .fill(1)
           .map(() => {
             return {
-              uuid: Random.id(),
+              uuid: Random.uuid(),
               dbName: Random.name(),
               collectionName: Random.name(),
             };

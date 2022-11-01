@@ -20,19 +20,14 @@ export enum Op {
   Gte = "GTE",
   LTE = "LTE",
   Lt = "LT",
+  NE = "NE",
 }
 
 //自定义操作
 export interface CustomizeModel{
-     /**
-     * 0 正常，其他不正常
-     */
-      code:  number;
-      data?: Data;
-      msg:   string;
+    bsonStr: string;
+    dbName:string;
+    uuid:string;
   }
   
-  export interface Data {
-      document: string;
-  }
 

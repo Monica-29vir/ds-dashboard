@@ -12,6 +12,7 @@ import {
   Divider,
   Input,
   Textarea,
+  Popconfirm,
 } from '@arco-design/web-vue';
 import { useAxios } from '@vueuse/integrations/useAxios';
 import { FormInstance } from '@arco-design/web-vue/es/form';
@@ -20,18 +21,6 @@ import { READ_URL, QUERY_URL } from '@/api/url';
 import { ReadListData, ReadListDataItem } from '@/api/types';
 import { QueryModel } from './types';
 import { reactive } from 'vue';
-
-interface Props {
-  uuid?: string;
-  ip?: string;
-  username?: string;
-}
-
-const props = withDefaults(defineProps<Props>(), {
-  uuid: '6df74580-023a-4aa0-ae5f-c134639e618d',
-  ip: '41.55.248.156',
-  username: 'Larry Williams',
-});
 
 const emit = defineEmits<{
   (e: 'change-step', idx: number): void;
@@ -172,8 +161,13 @@ const handleDeleteOp = (index: number) => {
         <template #title>MongoDB数据操作</template>
         <Form :model="formSelect" ref="formRef">
           <Row :gutter="16" justify="space-around">
-            <Col :span="7">
-              <FormItem field="uuid" label="选择实例" :virtual-list-props="{ height: 300 }">
+            <Col :span="8">
+              <FormItem
+                field="uuid"
+                label="选择实例"
+                :rules="[{ required: true, message: '请选择实例' }]"
+                :virtual-list-props="{ height: 300 }"
+              >
                 <Select
                   v-model="formSelect.uuid"
                   :loading="listLoading"
@@ -188,8 +182,13 @@ const handleDeleteOp = (index: number) => {
               </FormItem>
             </Col>
 
-            <Col :span="7">
-              <FormItem field="dbName" label="选择数据库" :virtual-list-props="{ height: 300 }">
+            <Col :span="8">
+              <FormItem
+                field="dbName"
+                label="选择数据库"
+                :rules="[{ required: true, message: '请选择数据库' }]"
+                :virtual-list-props="{ height: 300 }"
+              >
                 <Select
                   v-model="formSelect.dbName"
                   :loading="listLoading"
@@ -204,10 +203,11 @@ const handleDeleteOp = (index: number) => {
               </FormItem>
             </Col>
 
-            <Col :span="7">
+            <Col :span="8">
               <FormItem
                 field="collectionName"
                 label="选择集合"
+                :rules="[{ required: true, message: '请选择集合' }]"
                 :virtual-list-props="{ height: 300 }"
               >
                 <Select
@@ -231,10 +231,10 @@ const handleDeleteOp = (index: number) => {
         </Form>
         <Divider />
 
-        <Form :model="formInput" @submit="handleSubmit()">
+        <Form ref="formRef" :model="formInput" @submit="handleSubmit()">
           <Row :gutter="10">
-            <Col :span="7">
-              <FormItem label="选择操作">
+            <Col :span="8">
+              <FormItem label="选择操作" :rules="[{ required: true, message: '请选择操作' }]">
                 <Select
                   :style="{ width: '160px' }"
                   placeholder="Select"
@@ -269,28 +269,20 @@ const handleDeleteOp = (index: number) => {
                 </Col>
 
                 <Col :span="6">
-                  <FormItem no-style>
-                    <Button
-                      @click="handleAddCondition"
-                      type="primary"
-                      status="success"
-                      shape="square"
-                    >
-                      <template #icon>
-                        <icon-plus size="24" />
-                      </template>
+                  <FormItem no-style :rules="[{ required: true }]">
+                    <Button @click="handleAddCondition" :style="{ marginLeft: '10px' }">
+                      Add Post
                     </Button>
 
-                    <Button
-                      @click="handleDeleteCondition(index)"
-                      :style="{ marginLeft: '10px' }"
-                      status="danger"
-                      shape="square"
+                    <Popconfirm
+                      content="请确认是否删除"
+                      @ok="() => handleDeleteCondition(index)"
+                      type="warning"
                     >
-                      <template #icon>
-                        <icon-close size="24" />
-                      </template>
-                    </Button>
+                      <Button :style="{ marginLeft: '10px' }"
+                        >Delete</Button
+                      >
+                    </Popconfirm>
                   </FormItem>
                 </Col>
               </Row>
@@ -330,58 +322,55 @@ const handleDeleteOp = (index: number) => {
 
                 <Col :span="6">
                   <FormItem no-style>
-                    <Button @click="handleAddOp" type="primary" status="success" shape="square">
-                      <template #icon>
-                        <icon-plus size="24" />
-                      </template>
-                    </Button>
+                    <Button @click="handleAddOp" :style="{ marginLeft: '10px' }"> Add Post </Button>
 
-                    <Button
-                      @click="handleDeleteOp(index)"
-                      :style="{ marginLeft: '10px' }"
-                      status="danger"
-                      shape="square"
+                    <Popconfirm
+                      content="请确认是否删除"
+                      @ok="() => handleDeleteOp(index)"
+                      type="warning"
                     >
-                      <template #icon>
-                        <icon-close size="24" />
-                      </template>
-                    </Button>
+                      <Button :style="{ marginLeft: '10px' }"
+                        >Delete</Button
+                      >
+                    </Popconfirm>
                   </FormItem>
                 </Col>
               </Row>
             </FormItem>
 
             <FormItem
-          v-for="(post, index) of formInput.documentsList"
-          :field="`documentsList.${index + 1}.column`"
-          :label="`documents${index + 1}`"
-          :key="index"
-          :content-flex="false"
-          :merge-props="false"
-        >
-          <Row :gutter="10">
-            <Col :span="12">
-              <FormItem no-style>
-                <Textarea v-model="post.json" placeholder="请输入json" ></Textarea>
-              </FormItem>
-            </Col>
-            <Col :span="4">
-              <FormItem no-style>
-                <Button @click="handleAddDocuments" type="primary" status="success" shape="square"
-                  ><template #icon> <icon-plus size="24" /> </template
-                ></Button>
-                <Button
-                  @click="handleDeleteDocuments(index)"
-                  :style="{ marginLeft: '10px' }"
-                  status="danger"
-                  shape="square"
-                >
-                  <template #icon> <icon-close size="24" /> </template
-                ></Button>
-              </FormItem>
-            </Col>
-          </Row>
-        </FormItem>
+              v-for="(post, index) of formInput.documentsList"
+              :field="`documentsList.${index + 1}.column`"
+              :label="`documents${index + 1}`"
+              :key="index"
+              :content-flex="false"
+              :merge-props="false"
+              
+            >
+              <Row :gutter="10">
+                <Col :span="12">
+                  <FormItem no-style>
+                    <Textarea v-model="post.json" placeholder="请输入json"></Textarea>
+                  </FormItem>
+                </Col>
+                <Col :span="4">
+                  <FormItem no-style>
+                    <Button @click="handleAddDocuments" :style="{ marginLeft: '10px' }">
+                      Add Post
+                    </Button>
+                    <Popconfirm
+                      content="请确认是否删除"
+                      @ok="() => handleDeleteDocuments(index)"
+                      type="warning"
+                    >
+                      <Button :style="{ marginLeft: '10px' }"
+                        >Delete</Button
+                      >
+                    </Popconfirm>
+                  </FormItem>
+                </Col>
+              </Row>
+            </FormItem>
 
             <FormItem>
               <Button type="primary" html-type="submit">确认</Button>

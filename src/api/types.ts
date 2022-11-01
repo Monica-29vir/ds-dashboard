@@ -111,3 +111,13 @@ export interface ReadListData {
   count: number;
   data: ReadListDataItem[];
 }
+
+export interface BsonListDataItem {
+  uuid: string;
+  dbName: string;
+}
+
+export interface BsonListData {
+  count: number;
+  data: BsonListDataItem[];
+}

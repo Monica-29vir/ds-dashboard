@@ -4,14 +4,19 @@ import { successResp } from './_utils';
 
 const requests: MockMethod[] = [
   {
-    url: '/api/v1/bson',
+    url: '/api/v1/execute/bson',
     method: 'post',
-    response: ({ query }: { query: any }) => {
-      const size = +query.size;
+    response: () => {
       return successResp({
-        data: {
-          document: Random.string,
-        },
+        count: 500,
+        data: Array(500)
+          .fill(1)
+          .map(() => {
+            return {
+              uuid: Random.uuid(),
+              dbName: Random.name(),
+            };
+          }),
       });
     },
   },
